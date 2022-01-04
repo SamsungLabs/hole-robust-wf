@@ -102,10 +102,12 @@ We acknowledge Roman Suvorov to inspire us how to effectively postprocess raw de
 ## Citing
 
 ```
-@inproceedings{robustwf2022wacv,
-  title={Hole-robust Wireframe Detection},
-  author={Kong, Naejin and Park, Kiwoong and Goka, Harshith},
-  booktitle={Proceedings of the IEEE Winter Conference on Applications of Computer Vision (WACV)},
-  year={2022}
+@InProceedings{Kong_2022_WACV,
+    author    = {Kong, Naejin and Park, Kiwoong and Goka, Harshith},
+    title     = {Hole-Robust Wireframe Detection},
+    booktitle = {Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)},
+    month     = {January},
+    year      = {2022},
+    pages     = {1636-1645}
 }
 ```
