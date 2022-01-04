@@ -51,14 +51,14 @@ $ python process_hole_robust.py config/wireframe.yaml \
 <PATH-TO-MASK-DIR> \
 <PATH-TO-NPZ-DIR>
 ```
- * <PATH-TO-CKPT-PATH>: file path to the trained model  
+ * `<PATH-TO-CKPT-PATH>`: file path to the trained model  
    ex) `logs/000000-000000-e0748b-hole_robust_wf/checkpoint_best.pth`
- * <PATH-TO-TESTSET>: root directory of testset  
+ * `<PATH-TO-TESTSET>`: root directory of testset  
    ex) `data/wireframe` (Wireframe testset), `data/york` (York Urban testset)
- * <PATH-TO-MASK-DIR>: directory of masks for testset  
+ * `<PATH-TO-MASK-DIR>`: directory of masks for testset  
    ex) `None`(w/o mask), `data/wireframe/valid_mask/0010`(00%-10% testset), `data/wireframe/valid_mask/1030`(10%-30% testset)  
        `data/york/valid_mask/0010`(00%-10% testset), `data/york/valid_mask/1030`(10%-30% testset)
- * <PATH-TO-NPZ-DIR>: directory of detected results to be saved  
+ * `<PATH-TO-NPZ-DIR>`: directory of detected results to be saved  
    ex) `logs/npz-hole_robust_wf-eval-wireframe-1030`
 
 2. To evaluate *sAP* and *mAPJ*:
@@ -79,9 +79,9 @@ $ python demo_hole_robust.py -d 0 config/wireframe.yaml \
 <PATH-TO-IMAGE-DIR> \
 <PATH-TO-MASK-DIR>
 ```
- * <PATH-TO-CKPT-PTH>: file path to the trained model
- * <PATH-TO-IMAGE-DIR>: directory of input images
- * <PATH-TO-MASK-DIR>: directory of input masks correponding the input images
+ * `<PATH-TO-CKPT-PTH>`: file path to the trained model
+ * `<PATH-TO-IMAGE-DIR>`: directory of input images
+ * `<PATH-TO-MASK-DIR>`: directory of input masks correponding the input images
 
 
 ## License
