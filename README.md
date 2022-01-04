@@ -14,7 +14,7 @@ See `dataset/`.
 
 
 ## Algorithm Code
-See `algorithm/`. (to appear soon)
+See `algorithm/`.
 
 
 ## Tested Environment

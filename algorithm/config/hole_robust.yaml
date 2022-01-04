@@ -1,0 +1,19 @@
+io:
+  dir_conditional_data: train_mask
+  is_conditional_training: True
+  is_rgb_gan: True
+  is_pseudo_labeling: False
+  pseudodir: data/pseudo_labeled/  # root for pseudo-labeled data. effective only if 'is_pseudo_labeling == True'
+
+model:
+  loss_weight:
+    adv:  0.1  # weight factor for the adv.loss for generator
+    dis:  0.5  # weight factor for the adv.loss for discriminator. empirically better in general among (0.1, 0.5, 1.0)
+    rec:  1.0
+    per:  0.1
+    sty:  250.0
+
+  use_spectral_norm: True
+  gan_optimization_mode: 2  # either mode 1 or 2 for RGB GAN optimization
+  pretrained_model_features_per: [2, 7, 12, 21, 30]
+  pretrained_model_features_sty: [9, 18, 27, 32] # empirically, better in general among [2,7,12,21,30], [4,9,18,27,30], [4,9,18,27,36], [9,18,27,32], [9,18,27,30]
