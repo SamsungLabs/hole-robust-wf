@@ -62,8 +62,10 @@ $ python process_hole_robust.py config/wireframe.yaml \
    ex) `logs/npz-hole_robust_wf-eval-wireframe-1030`
 
 2. To evaluate *sAP* and *mAPJ*:
+```bash
 $ python eval-sAP.py <PATH-TO-NPZ-DIR>
 $ python eval-mAPJ.py <PATH-TO-NPZ-DIR>
+```
 
 
 ## How to infer
