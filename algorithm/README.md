@@ -83,7 +83,7 @@ $ python demo_hole_robust.py -d 0 config/wireframe.yaml \
 ```
  * `<PATH-TO-CKPT-PTH>`: file path to the trained model
  * `<PATH-TO-IMAGE-DIR>`: directory of input images
- * `<PATH-TO-MASK-DIR>`: directory of input masks correponding the input images
+ * `<PATH-TO-MASK-DIR>`: directory of input masks corresponding to the input images
 
 
 ## License
