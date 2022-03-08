@@ -5,21 +5,22 @@ import torchvision
 
 from lcnn.config import C, M
 
-        
+
 class RGBGANLoss(nn.Module):
-    def __init__(self):
+    def __init__(self, is_pretrained_models=True):
         super(RGBGANLoss, self).__init__()
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         
-        self.pretrained_models = list()
-        for pretrained_model_features in [[0] + M.pretrained_model_features_per, [0] + M.pretrained_model_features_sty]:
-            pretrained_model = list()
-            pretrained_model_load = torchvision.models.vgg19(pretrained=True).features
-            for features_idx in range(1, len(pretrained_model_features)):
-                pretrained_model.append(nn.Sequential())
-                for idx in range(pretrained_model_features[features_idx - 1], pretrained_model_features[features_idx]):
-                    pretrained_model[-1].add_module(str(idx), pretrained_model_load[idx].to(self.device))                    
-            self.pretrained_models.append(pretrained_model)
+        if is_pretrained_models:
+            self.pretrained_models = list()
+            for pretrained_model_features in [[0] + M.pretrained_model_features_per, [0] + M.pretrained_model_features_sty]:
+                pretrained_model = list()
+                pretrained_model_load = torchvision.models.vgg19(pretrained=True).features
+                for features_idx in range(1, len(pretrained_model_features)):
+                    pretrained_model.append(nn.Sequential())
+                    for idx in range(pretrained_model_features[features_idx - 1], pretrained_model_features[features_idx]):
+                        pretrained_model[-1].add_module(str(idx), pretrained_model_load[idx].to(self.device))                    
+                self.pretrained_models.append(pretrained_model)
 
     @staticmethod
     def _gram_matrix(feature):
@@ -172,7 +173,7 @@ class NLayerDiscriminator(nn.Module):
         feat = [x]
         for idx in range(self.n_layers + 2):
             layer = getattr(self, 'layer' + str(idx))
-            feat.append(layer(feat[-1]))        
+            feat.append(layer(feat[-1]))
         out = torch.sigmoid(feat[-1])
         return out, feat[1:]
 
@@ -187,9 +188,9 @@ class RGBGANDiscriminatorLearner(nn.Module):
     def __init__(self):
         super(RGBGANDiscriminatorLearner, self).__init__()
 
-        self.rgb_gan_losses = RGBGANLoss()
         self.use_spectral_norm = M.use_spectral_norm and C.io.is_rgb_gan
         self.model_d = NLayerDiscriminator(3, use_spectral_norm=self.use_spectral_norm)
+        self.rgb_gan_losses = RGBGANLoss()  # Must be loaded after loading the discriminator
 
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.mean = torch.tensor([M.image.mean]).unsqueeze(2).unsqueeze(3).to(self.device)
@@ -217,6 +218,7 @@ class RGBGANDiscriminatorLearner(nn.Module):
             input_real_g = image
             input_fake_g = result["image_pred"]
 
+            output_real_g, _ = self.model_d(input_real_g)
             output_fake_g, _ = self.model_d(input_fake_g)
 
             result_rgb_gan_losses["losses_gen"] = M.loss_weight["adv"] * self.rgb_gan_losses.loss_adv_gen(output_fake_g)
@@ -230,7 +232,7 @@ class RGBGANHourglassDecoderLearner(nn.Module):
     def __init__(self):
         super(RGBGANHourglassDecoderLearner, self).__init__()
 
-        self.rgb_gan_losses = RGBGANLoss()
+        self.rgb_gan_losses = RGBGANLoss(is_pretrained_models=False)
 
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.mean = torch.tensor([M.image.mean]).unsqueeze(2).unsqueeze(3).to(self.device)
